@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Vigihdev\WpCliTinypng\Command;
 
-final class Tinify_Command extends Base_Command
+final class Tinify_Command extends Tinify_Base_Command
 {
     public function __construct()
     {
-        parent::__construct(name: 'tinify');
+        parent::__construct(name: 'tini');
     }
 
     /**
@@ -18,27 +18,22 @@ final class Tinify_Command extends Base_Command
      * 
      * <file>
      * : File yang akan di compress eg: (assets/img/tiny.png)
-     * ---
      * 
      * [--output=<filepath>]
      * : Filepath full directory dan extension untuk menyimpan file yang di compress
-     * ---
+     * required: true
      * 
      * [--width=<width>]
      * : Lebar gambar yang di compress
-     * ---
      * 
      * [--height=<height>]
      * : Tinggi gambar yang di compress
-     * ---
      * 
      * [--resize=<method>]
      * : Method resize gambar yang di compress, default adalah cover
-     * ---
      * 
      * [--dry-run]
      * : Show only the files that would be modified
-     * ---
      * 
      * ## EXAMPLES
      *  

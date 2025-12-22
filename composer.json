@@ -55,6 +55,8 @@
     },
     "scripts": {
         "test": "phpunit",
+        "watch": "nodemon dev.js",
+        "update:model": "console composer:update vigihdev/wp-cli-models",
         "build": "console git:push && console satis:build && cd $HOME/.wp-cli/packages && console composer:update vigihdev/wp-cli-tinypng && cd $HOME/WordpressCli/wp-cli-tinypng",
         "dev": "php -S localhost:1472 dev.php"
     }
