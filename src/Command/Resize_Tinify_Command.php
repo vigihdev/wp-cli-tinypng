@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vigihdev\WpCliTinypng\Command;
 
+use SplFileInfo;
 use Vigihdev\WpCliModels\Validators\FileValidator;
 use WP_CLI\Utils;
 
@@ -65,9 +66,13 @@ final class Resize_Tinify_Command extends Tinify_Base_Command
         $resize = (string)Utils\get_flag_value($assoc_args, 'resize', 'fit');
 
         try {
+            $this->normalizeFilePath();
+            $this->normalizeOutput();
             FileValidator::validate($this->filepath)
                 ->mustExist();
+            $this->dryRun();
         } catch (\Throwable $e) {
+            // $this->io->renderBlock($e->getMessage())->error();
             $this->exceptionHandler->handle($this->io, $e);
         }
     }
@@ -75,12 +80,26 @@ final class Resize_Tinify_Command extends Tinify_Base_Command
     private function dryRun(): void
     {
         $io = $this->io;
-        $io->success(sprintf('Dry run: %s -> %s', $this->filepath, $this->output));
+        $dryRun = $io->renderDryRunPreset("Resize image");
+        $info = new SplFileInfo($this->filepath);
+        $dryRun
+            ->addInfo(
+                "Resize image Source: {$this->filepath}",
+                "Resize image Destination: {$this->output}",
+            )
+            ->addTableSingle([
+                'File' => $info->getFilename(),
+                // 'Path' => $info->getPath(),
+                'Size' => $info->getSize(),
+                'Extension' => $info->getExtension(),
+                // 'Height' => $this->height,
+                // 'Output' => $this->output,
+            ]);
+        $dryRun->render();
     }
 
     private function process(): void
     {
         $io = $this->io;
-        $io->success(sprintf('Process: %s -> %s', $this->filepath, $this->output));
     }
 }

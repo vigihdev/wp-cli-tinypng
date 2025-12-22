@@ -32,4 +32,16 @@ final class AddKey_Tinify_Command extends Tinify_Base_Command
      * @param array $assoc_args
      */
     public function __invoke(array $args, array $assoc_args): void {}
+
+    private function dryRun(): void
+    {
+        $io = $this->io;
+        $io->renderBlock('Dry run, no files will be modified');
+    }
+
+    private function process(string $key): void
+    {
+        $io = $this->io;
+        $io->renderBlock('Add tinify API key: ' . $key);
+    }
 }
