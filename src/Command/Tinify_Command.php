@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Vigihdev\WpCliTinypng\Command;
 
-
 final class Tinify_Command extends Base_Command
 {
     public function __construct()
