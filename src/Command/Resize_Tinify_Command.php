@@ -89,12 +89,13 @@ final class Resize_Tinify_Command extends Tinify_Base_Command
             )
             ->addTableSingle([
                 'File' => $info->getFilename(),
-                // 'Path' => $info->getPath(),
                 'Size' => $info->getSize(),
                 'Extension' => $info->getExtension(),
+                // 'Path' => $info->getPath(),
                 // 'Height' => $this->height,
                 // 'Output' => $this->output,
             ]);
+
         $dryRun->render();
     }
 

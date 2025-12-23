@@ -17,9 +17,13 @@ abstract class Tinify_Base_Command extends WP_CLI_Command
     protected string $output = '';
     protected string $filepath = '';
 
+    /**
+     * @var CliStyle $io
+     */
     protected ?CliStyle $io = null;
 
     protected HandlerExceptionInterface $exceptionHandler;
+
     public function __construct(
         protected string $name
     ) {
