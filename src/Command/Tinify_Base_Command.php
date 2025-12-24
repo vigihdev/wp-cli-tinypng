@@ -6,16 +6,18 @@ namespace Vigihdev\WpCliTinypng\Command;
 
 use Symfony\Component\Filesystem\Path;
 use WP_CLI_Command;
-use Vigihdev\WpCliModels\Exceptions\Handler\HandlerExceptionInterface;
-use Vigihdev\WpCliModels\Exceptions\Handler\WpCliExceptionHandler;
+use Vigihdev\WpCliTools\Exceptions\Handler\{HandlerExceptionInterface, DefaultExceptionHandler};
 use Vigihdev\WpCliModels\UI\CliStyle;
+use Vigihdev\WpCliTools\Builders\ImageSizeBuilder;
 
 abstract class Tinify_Base_Command extends WP_CLI_Command
 {
+    protected const ALLOW_EXTENSION = ['png', 'jpg', 'jpeg', 'webp'];
     protected ?int $width = null;
     protected ?int $height = null;
     protected string $output = '';
     protected string $filepath = '';
+    protected bool $force = false;
 
     /**
      * @var CliStyle $io
@@ -28,7 +30,7 @@ abstract class Tinify_Base_Command extends WP_CLI_Command
         protected string $name
     ) {
         parent::__construct();
-        $this->exceptionHandler = new WpCliExceptionHandler();
+        $this->exceptionHandler = new DefaultExceptionHandler();
 
         if (!$this->io) {
             $this->io = new CliStyle();
@@ -48,5 +50,11 @@ abstract class Tinify_Base_Command extends WP_CLI_Command
         $this->output = Path::isAbsolute($this->output) ?
             $this->output : Path::join(getcwd() ?? '', $this->output);
         return $this;
+    }
+
+    protected function imageBuilder(): ImageSizeBuilder
+    {
+        $builder = new ImageSizeBuilder($this->filepath);
+        return $builder;
     }
 }
