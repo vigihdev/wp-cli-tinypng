@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vigihdev\WpCliTinypng\Exceptions;
 
-final class BaseException extends \RuntimeException
+abstract class BaseException extends \RuntimeException
 {
     protected array $context = [];
 
